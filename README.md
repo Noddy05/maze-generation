@@ -1,2 +1,2 @@
 # maze-generation
-Trying out differnet maze generation algorithms
+Trying out different maze generation algorithms
