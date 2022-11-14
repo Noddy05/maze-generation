@@ -8,6 +8,14 @@ this.previousBacterias = [{ "x": 0, "y": 0 }];
 this.cursor = [{ "x": 0, "y": 0 }];
 this.startingBacterias = 1;
 
+var infoBG =
+    [
+        "Mark one cell as visited",
+        "For each visited cell check if it has any unvisited neighbour cells",
+        "If so, expand the cell in a random valid direction",
+        "Repeat until every cell has been visited",
+    ];
+
 function GenerateBG() {
     bacterias = [];
     previousBacterias = [];
@@ -38,6 +46,7 @@ function GenerateBG() {
                 mazeCells[x][y].tags.push("generated");
             }
             clearInterval(loop);
+            DrawGrid();
         }
     });
 }
@@ -68,11 +77,14 @@ this.GrowBG = function () {
     for (let i = 0; i < n; i++) {
         indexes.push(i);
     }
-    for (let i = 0; i < n; i++) {
-        let temp = indexes[i];
-        let rand = Math.floor(Math.random() * indexes.length);
-        indexes[i] = indexes[rand];
-        indexes[rand] = temp;
+
+    if (_rchValue.checked) {
+        for (let i = 0; i < n; i++) {
+            let temp = indexes[i];
+            let rand = Math.floor(Math.random() * indexes.length);
+            indexes[i] = indexes[rand];
+            indexes[rand] = temp;
+        }
     }
 
     for (let i = 0; i < n; i++) {

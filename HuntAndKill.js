@@ -1,9 +1,18 @@
 // JavaScript source code
 console.log("Hunt and Kill running!");
 
-
 this.cursor = { "x": 0, "y": 0 };
 this.visitedCells = [{ "x": 0, "y": 0 }];
+
+var infoHK =
+    [
+        "Instantiate the cursor, in this case at (0, 0)",
+        "Move the cursor in a random valid direction",
+        "Tear down the wall between the previous cursor position and the new one",
+        "Repeat until there's no valid direction to choose from",
+        "Now you enter hunt mode, search random cells you've visited and pick that one as the new cursor if it has a valid direction to choose from",
+        "Repeat the previous steps until every cell has been visited"
+    ];
 
 function GenerateHK() {
     visitedCells = [];
@@ -27,6 +36,7 @@ function GenerateHK() {
             mazeCells[cursor.x][cursor.y].tags.push("generated");
             RemoveTag(cursor.x, cursor.y, "cursor");
             clearInterval(loop);
+            DrawGrid();
         }
     });
 }

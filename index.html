@@ -10,15 +10,20 @@
     </canvas>
     <br />
 
-    <label for="cars">Select Maze Generation Algorithm</label>
+    <label for="algorithm">Select Maze Generation Algorithm</label>
     <select id="algorithm">
+        <option value="HK">Hunt and Kill</option>
         <option value="RB">Recursive Backtracker</option>
         <option value="RP">Randomized Prim's algorithm</option>
         <option value="BG">Bacterial Growth</option>
-        <option value="HK">Hunt and Kill</option>
     </select>
     <br />
+    <div id="rch-slot">
+        <label>Random cell hierarchy</label>
+        <input id="rch" type="checkbox" />
+    </div>
     <button onclick="GenerateMaze()">Generate Maze</button>
+    <p id="algorithm-info"></p>
 </body>
 </html>
 
@@ -30,11 +35,49 @@
 <script>
     console.log("Main running!");
     var _algorithm = document.getElementById("algorithm");
+    var _algorithmInfo = document.getElementById("algorithm-info");
+    var _rchSlot = document.getElementById("rch-slot");
+    var _rchValue = document.getElementById("rch");
 
     var _canvas = document.getElementById("canvas");
     var _ctx = _canvas.getContext("2d");
     _canvas.width = 5000;
     _canvas.height = 5000;
+
+    UpdateAlgorithmInfo();
+    _algorithm.addEventListener('change', (event) => {
+        UpdateAlgorithmInfo();
+    });
+
+    function UpdateAlgorithmInfo() {
+        let result = _algorithm.value;
+
+        _rchSlot.style.display = "none";
+        switch (result) {
+            case "RB":
+                _algorithmInfo.innerHTML = InterpretInfo(infoRB);
+                break;
+            case "HK":
+                _algorithmInfo.innerHTML = InterpretInfo(infoHK);
+                break;
+            case "RP":
+                _algorithmInfo.innerHTML = InterpretInfo(infoRP);
+                break;
+            case "BG":
+                _algorithmInfo.innerHTML = InterpretInfo(infoBG);
+                _rchSlot.style.display = "block";
+                break;
+        }
+    }
+
+    function InterpretInfo(info) {
+        let output = "";
+        for (let i = 0; i < info.length; i++) {
+            output += (i + 1) + ") " + info[i] + "<br>";
+        }
+
+        return output;
+    }
 
     //Maze cell struct will contain a list of tags and the walls [top, right, bottom, left]
     var mazeCells = [[]];
@@ -46,8 +89,8 @@
         "cursor": { "weight": 10, "color": "red" },
     };
     var wallColor = "black";
-    var cellsX = 10;
-    var cellsY = 10;
+    var cellsX = 7;
+    var cellsY = 6;
     var cellWidth = _canvas.width / cellsX;
     var cellHeight = _canvas.height / cellsY;
     var wallThickness = 5;
@@ -96,7 +139,7 @@
     GenerateRB();
 
     function DrawGrid() {
-        _ctx.fillStyle = "black";
+        _ctx.fillStyle = "white";
         _ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         for (let y = 0; y < cellsY; y++) {
@@ -108,23 +151,23 @@
 
     function DrawCell(x, y) {
         _ctx.fillStyle = HighestTag(mazeCells[x][y].tags).color;
-        _ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+        _ctx.fillRect(x * cellWidth - 1, y * cellHeight - 1, cellWidth + 2, cellHeight + 2);
         DrawWalls(x, y);
     }
 
     function DrawWalls(x, y) {
         _ctx.fillStyle = wallColor;
         if (mazeCells[x][y].walls[0]) {
-            _ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, wallThickness);
+            _ctx.fillRect(x * cellWidth - 1, y * cellHeight - 1, cellWidth + 2, wallThickness + 2);
         }
         if (mazeCells[x][y].walls[1]) {
-            _ctx.fillRect((x + 1) * cellWidth - wallThickness, y * cellHeight, wallThickness, cellHeight);
+            _ctx.fillRect((x + 1) * cellWidth - wallThickness - 1, y * cellHeight - 1, wallThickness + 2, cellHeight + 2);
         }
         if (mazeCells[x][y].walls[2]) {
-            _ctx.fillRect(x * cellWidth, (y + 1) * cellHeight - wallThickness, cellWidth, wallThickness);
+            _ctx.fillRect(x * cellWidth - 1, (y + 1) * cellHeight - wallThickness - 1, cellWidth + 2, wallThickness + 2);
         }
         if (mazeCells[x][y].walls[3]) {
-            _ctx.fillRect(x * cellWidth, y * cellHeight, wallThickness, cellHeight);
+            _ctx.fillRect(x * cellWidth - 1, y * cellHeight - 1, wallThickness + 2, cellHeight + 2);
         }
     }
 

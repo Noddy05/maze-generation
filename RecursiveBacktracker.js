@@ -5,6 +5,17 @@ console.log("Backtracker running!");
 this.cursor = { "x": 0, "y": 0 };
 this.route = [{ "x": 0, "y": 0 }];
 
+var infoRB =
+    [
+        "Instantiate the cursor, in this case at (0, 0)",
+        "Move the cursor in a random valid direction",
+        "Tear down the wall between the previous cursor position and the new one",
+        "Repeat until there's no valid direction to choose from",
+        "Now you move back one cell and check if it has any unvisited neighbouring cells",
+        "If you have any unvisited neighbours you move to a random unvisited neighbour, if not you repeat the previous step",
+        "Repeat this until your cursor is back at the start"
+    ];
+
 function GenerateRB() {
     visited = [[]];
     cursor = { "x": 0, "y": 0 };
@@ -24,6 +35,7 @@ function GenerateRB() {
             mazeCells[cursor.x][cursor.y].tags.push("generated");
             RemoveTag(cursor.x, cursor.y, "cursor");
             clearInterval(loop);
+            DrawGrid();
         }
     });
 }

@@ -6,6 +6,14 @@ this.cursor = { "x": 0, "y": 0 };
 this.visitedCells = [{ "x": 0, "y": 0 }];
 this.previousCell = { "x": 0, "y": 0 };
 
+var infoRP =
+    [
+        "Mark one cell as visited, in this case at (0, 0)",
+        "Pick a random cell with unvisited neighbours",
+        "Expand this cell in a random valid direction",
+        "Repeat until every cell has been visited",
+    ];
+
 function GenerateRP() {
     visitedCells = [];
     previousCell = { "x": 0, "y": 0 };
@@ -29,6 +37,7 @@ function GenerateRP() {
         if (visitedCells.length >= cellsX * cellsY) {
             mazeCells[previousCell.x][previousCell.y].tags.push("generated");
             clearInterval(loop);
+            DrawGrid();
         }
     });
 }
