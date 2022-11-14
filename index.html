@@ -125,6 +125,18 @@
         }, 100);
     }
 
+    var loop = null;
+    function WhileLoop(update, after) {
+        loop = setInterval(() => {
+            if (!update())
+                return;
+            clearInterval(loop);
+            loop = null;
+            if(after != null)
+                after();
+        }, 100);
+    }
+
     GenerateGrid();
     function GenerateGrid() {
         mazeCells = [[]];
@@ -226,3 +238,4 @@
 
 </script>
 
+<script src="FloodFill.js"></script>
