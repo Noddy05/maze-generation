@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E2E68A8-85F7-4B1B-A058-02DE2E6165DC}"
 	ProjectSection(SolutionItems) = preProject
 		BacterialGrowth.js = BacterialGrowth.js
+		FloodFill.js = FloodFill.js
 		HuntAndKill.js = HuntAndKill.js
 		index.html = index.html
 		RandomPrim.js = RandomPrim.js

@@ -23,6 +23,7 @@ function GenerateHK() {
         visited[x] = [];
         for (y = 0; y < cellsY; y++) {
             visited[x][y] = false;
+            mazeCells[x][y].tags = ["unvisited"];
         }
     }
     visitedCells.push({ "x": cursor.x, "y": cursor.y });

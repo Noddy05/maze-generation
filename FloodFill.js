@@ -3,12 +3,15 @@
 var floodCells = [{ "x": 0, "y": 0 }];
 var values = [[]];
 
-var start = { "x": 0, "y": 0 };
-var end = { "x": cellsX - 1, "y": cellsY - 1 };
-var route = [];
+let start = { "x": 0, "y": 0 };
+let end = { "x": cellsX - 1, "y": cellsY - 1 };
+let route = [];
 
+//Breadth first search
 let index = 0;
 function FloodFill() {
+    start = { "x": 0, "y": 0 };
+    end = { "x": cellsX - 1, "y": cellsY - 1 };
     floodCells = [{ "x": start.x, "y": start.y }];
     values = [[]];
     route = [];
@@ -22,7 +25,7 @@ function FloodFill() {
     }
     DrawGrid();
     route = [{ "x": end.x, "y": end.y }];
-    WhileLoop(Fill, WhileLoop(TraceBack, null));
+    WhileLoop(Fill, () => WhileLoop(TraceBack, null));
 }
 
 function Fill() {
